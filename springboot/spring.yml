@@ -10,10 +10,15 @@
         - ansible_facts['distribution'] != "Ubuntu"
         - ansible_facts['distribution'] != "RedHat"
     - name: install java
-      package:
+      apt:
         name: "{{ java_package }}"
         state: present
-      when:
+      when: ansible_facts['distribution'] != "Ubuntu"
+    - name: install java
+      yum:
+        name: "{{ java_package }}"
+        state: present
+      when: ansible_facts['distribution'] != "RedHat"
     - name: create a spc directory
       file:
         path: "{{ app_dir }}"
