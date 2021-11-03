@@ -1,0 +1,5 @@
+java_package: openjdk-11-jdk
+app_dir: /usr/share/spring-petclinic
+app_url_download: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+app_path: /usr/share/spring-petclinic/spring-petclinic-2.4.2.jar
+app_user: spcuser

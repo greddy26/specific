@@ -1,0 +1,48 @@
+---
+- name: Deploy springboot application
+  hosts: appserver
+  become: yes
+  tasks:
+    - name: Fail the execution when the distribution is not ubuntu and RedHat
+      fail:
+        msg: this play-book will work on centos and ubuntu
+      when: ansible_facts['distribution'] != "Ubuntu" and ansible_facts['distribution'] != "CentOS"
+    - name: install java
+      package:
+        name: "{{ java_package }}"
+        state: present
+    - name: create a spc directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+      notify:
+        - debug message for directory creation
+    - name: download the spc.jar file
+      get_url:
+        url: "{{ app_url_download }}"
+        dest: "{{ app_path }}"
+    - name: create spc user
+      user:
+        name: "{{ app_user }}"
+        state: present
+      notify:
+        - change ownership of jar file
+    - name: copy the service file
+      copy:
+        src: spc.service
+        dest: /etc/systemd/system/spc.service
+    - name: enable and restart spc
+      systemd:
+        name: spc.service
+        enabled: yes
+        state: started
+  handlers:
+    - name: change ownership of jar file
+      file:
+        path: "{{ app_path }}"
+        owner: "{{ app_user }}"
+        mode: 500
+        state: file
+    - name: debug message for directory creation
+      debug:
+        msg: " direcotry created at {{ app_dir }} "
