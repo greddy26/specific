@@ -1,6 +1,6 @@
 [appserver]
-172.31.11.240
-172.31.5.238
+172.31.11.240 java_package: openjdk-11-jdk
+172.31.5.238 java_package: java-11-openjdk-devel
 
 
 [ubuntu]
