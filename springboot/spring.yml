@@ -11,7 +11,7 @@
         - ansible_facts['distribution'] != "RedHat"
     - name: install java
       apt:
-        name: "{{ java_package }}"
+        name: openjdk-11-jdk
         state: present
         update_cache: yes
     - name: create a spc directory
