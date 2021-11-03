@@ -13,12 +13,7 @@
       apt:
         name: "{{ java_package }}"
         state: present
-      when: ansible_facts['distribution'] != "Ubuntu"
-    - name: install java
-      yum:
-        name: "{{ java_package }}"
-        state: present
-      when: ansible_facts['distribution'] != "RedHat"
+        update_cache: yes
     - name: create a spc directory
       file:
         path: "{{ app_dir }}"
