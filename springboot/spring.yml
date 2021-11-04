@@ -39,7 +39,7 @@
         - change ownership of jar file
     - name: copy the service file
       copy:
-        src: template/spc.service.j2
+        src: spc.service
         dest: /etc/systemd/system/spc.service
         remote_src: yes
     - name: enable and restart spc
