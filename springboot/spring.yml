@@ -2,6 +2,13 @@
 - name: Deploy springboot application
   hosts: appserver
   become: yes
+  vars:
+    java_package: openjdk-11-jdk
+    app_dir: /usr/share/spring-petclinic
+    app_url_download: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+    app_path: /usr/share/spring-petclinic/spring-petclinic-2.4.2.jar
+    app_user: spcuser
+
   tasks:
     - name: Fail the execution when the distribution is not ubuntu and RedHat
       fail:
@@ -11,7 +18,7 @@
         - ansible_facts['distribution'] != "RedHat"
     - name: install java
       apt:
-        name: openjdk-11-jdk
+        name: "{{ java_package }}"
         state: present
         update_cache: yes
     - name: create a spc directory
