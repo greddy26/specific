@@ -12,9 +12,20 @@
         deb: /tmp/packages-microsoft-prod.deb
     - name: install the .net core run times
       apt:
-        name: "{{ items }}"
+        name: "{{ item }}"
         update_cache: yes
         state: present
       with_items:
         - apt-transport-https
         - aspnetcore-runtime-3.1
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+      notify:
+        - start nginx
+  handlers:
+    - name: start nginx
+      systemd:
+        name: nginx
+        state: started
