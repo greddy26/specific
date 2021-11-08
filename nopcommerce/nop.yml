@@ -24,6 +24,22 @@
         state: present
       notify:
         - start nginx
+    - name: create a directory nopcemmerce
+      file:
+        path: /var/www/nopCommerce440
+        state: directory
+    - name: Download the nopcemmerce
+      get_url:
+        url: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.40.4/nopCommerce_4.40.4_NoSource_linux_x64.zip
+        dest: tmp/nopCommerce_4.40.4_NoSource_linux_x64.zip
+    - name: install unzip
+      apt:
+        name: unzip
+        state: present
+    - name: unzip the zip
+      unarchive:
+        src: tmp/nopCommerce_4.40.4_NoSource_linux_x64.zip
+        dest: /var/www/nopCommerce440/
   handlers:
     - name: start nginx
       systemd:
