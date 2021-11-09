@@ -38,8 +38,27 @@
         state: present
     - name: unzip the zip
       unarchive:
-        src: tmp/nopCommerce_4.40.4_NoSource_linux_x64.zip
+        src: /var/www/nopCommerce440/nopCommerce_4.40.4_NoSource_linux_x64.zip
         dest: /var/www/nopCommerce440/
+    - name: create directories
+      file:
+        path:
+          - /var/www/bin
+          - /var/www/logs
+        state: directory
+    - name: change group
+      file:
+        path: /var/www/
+        owner: www-data/
+        group: nopcemmerce440
+    - name: change ownership recursive
+      file:
+        path: /var/www/nopCommerce440/
+        recurse: yes
+    - name: copy service file
+      copy:
+        src: nopCommerce440.service
+        dest: /etc/systemd/system/nopCommerce440.service
   handlers:
     - name: start nginx
       systemd:
