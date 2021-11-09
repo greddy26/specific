@@ -55,6 +55,7 @@
       file:
         path: /var/www/nopCommerce440/
         recurse: yes
+        owner: www-data
     - name: copy service file
       copy:
         src: nopCommerce440.service
